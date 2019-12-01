@@ -98,6 +98,57 @@ function jnrmillwork_content_width() {
 }
 add_action( 'after_setup_theme', 'jnrmillwork_content_width', 0 );
 
+
+/**
+ * Register custom fonts.
+ */
+function jnrmillwork_fonts_url() {
+	$fonts_url = '';
+
+	/*
+	 * translators: If there are characters in your language that are not supported
+	 * by Lato, translate this to 'off'. Do not translate into your own language.
+	 */
+	$libre_franklin = _x( 'on', 'Lato font: on or off', 'jnrmillwork' );
+
+	if ( 'off' !== $libre_franklin ) {
+		$font_families = array();
+
+		$font_families[] = 'Lato:300,300i,400,400i,700,700i';
+
+		$query_args = array(
+			'family'  => urlencode( implode( '|', $font_families ) ),
+			'subset'  => urlencode( 'latin,latin-ext' ),
+			'display' => urlencode( 'fallback' ),
+		);
+
+		$fonts_url = add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
+	}
+
+	return esc_url_raw( $fonts_url );
+}
+
+/**
+ * Add preconnect for Google Fonts.
+ *
+ * @since Twenty Seventeen 1.0
+ *
+ * @param array  $urls           URLs to print for resource hints.
+ * @param string $relation_type  The relation type the URLs are printed.
+ * @return array $urls           URLs to print for resource hints.
+ */
+function jnrmillwork_resource_hints( $urls, $relation_type ) {
+	if ( wp_style_is( 'jnrmillwork-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
+		$urls[] = array(
+			'href' => 'https://fonts.gstatic.com',
+			'crossorigin',
+		);
+	}
+
+	return $urls;
+}
+add_filter( 'wp_resource_hints', 'jnrmillwork_resource_hints', 10, 2 );
+
 /**
  * Register widget area.
  *
@@ -119,12 +170,20 @@ add_action( 'widgets_init', 'jnrmillwork_widgets_init' );
 /**
  * Enqueue scripts and styles.
  */
-function jnrmillwork_scripts() {
+
+function jnrmillwork_styles() {
 	wp_enqueue_style( 'jnrmillwork-style', get_stylesheet_uri() );
 
-	wp_enqueue_script( 'jnrmillwork-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
+	wp_enqueue_style('google-fonts', jnrmillwork_fonts_url(), array(), null);
+}
+add_action( 'wp_enqueue_scripts', 'jnrmillwork_styles');
+
+
+function jnrmillwork_scripts() {
 
 	wp_enqueue_script( 'jnrmillwork-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+
+	wp_enqueue_script('minified-js', get_template_directory_uri(). '/scripts.min.js', array('jquery'), '20151215', true);
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
