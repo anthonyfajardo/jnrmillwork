@@ -171,6 +171,7 @@ add_action( 'widgets_init', 'jnrmillwork_widgets_init' );
  * Enqueue scripts and styles.
  */
 
+
 function jnrmillwork_styles() {
 	wp_enqueue_style( 'jnrmillwork-style', get_stylesheet_uri() );
 
@@ -190,6 +191,57 @@ function jnrmillwork_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'jnrmillwork_scripts' );
+
+
+/**
+* LOADING BOOTSTRAP 4 
+**/
+
+function enqueue_load_bootstrap(){
+
+    // Add bootstrap CSS
+    wp_register_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', false, NULL, 'all' );
+    wp_enqueue_style( 'bootstrap-css' );
+
+    // Add popper js
+    wp_register_script( 'popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', ['jquery'], NULL, true );
+    wp_enqueue_script( 'popper-js' );
+
+    // Add bootstrap js
+    wp_register_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', ['jquery'], NULL, true );
+    wp_enqueue_script( 'bootstrap-js' );
+
+}
+
+// Add integrity and cross origin attributes to the bootstrap css.
+function add_bootstrap_css_attributes( $html, $handle ) {
+    if ( $handle === 'bootstrap-css' ) {
+        return str_replace( '/>', 'integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />', $html );
+    }
+    return $html;
+}
+add_filter( 'style_loader_tag', 'add_bootstrap_css_attributes', 10, 2 );
+
+// Add integrity and cross origin attributes to the bootstrap script.
+function add_bootstrap_script_attributes( $html, $handle ) {
+    if ( $handle === 'bootstrap-js' ) {
+        return str_replace( '></script>', ' integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>', $html );
+    }
+    return $html;
+}
+add_filter('script_loader_tag', 'add_bootstrap_script_attributes', 10, 2);
+
+// Add integrity and cross origin attributes to the popper script.
+function add_popper_script_attributes( $html, $handle ) {
+    if ( $handle === 'popper-js' ) {
+        return str_replace( '></script>', ' integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>', $html );
+    }
+    return $html;
+}
+add_filter('script_loader_tag', 'add_popper_script_attributes', 10, 2);
+
+add_action( 'wp_enqueue_scripts', 'enqueue_load_bootstrap' );
+
 
 /**
  * Implement the Custom Header feature.
@@ -218,3 +270,10 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+
+/* dump() - makes for easy debugging. <?php dump($post); ?> */
+function dump($obj) {
+	echo "<pre>";
+	print_r($obj);
+	echo "</pre>";
+}
