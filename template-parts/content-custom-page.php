@@ -10,7 +10,7 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<?php if(have_rows('section')): ?>
+	<!-- <?php if(have_rows('section')): ?>
 		<?php while(have_rows('section')): the_row(); ?>
 
 			<?php $section_id = get_sub_field('section_id'); ?>
@@ -37,9 +37,9 @@
 
 
 									<?php $image = get_sub_field('banner_image'); ?> 
-									<div class="banner-section" style="background: url(<?php echo $image; ?>); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; ?>">
+									<div class="banner-section" style="background: url(<?php echo $image; ?>); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; ?>">
 										<div class="tagline">
-											<h1 style="color: white; text-align: center; text-shadow: 2px 2px 1px black; font-size: 70px;">
+											<h1 style="color: white; text-align: center; text-shadow: 2px 2px 1px black; font-size: 25px;">
 												A Fully Integrated<br>
 												Custom Millwork <br>
 												Provider
@@ -77,11 +77,11 @@
 				<?php endif; ?>
 
 				
-			</div> <!-- /.section -->
+			</div>
 
 
 		<?php endwhile; ?>
-	<?php endif; ?>
+	<?php endif; ?> -->
 
 
 	<?php if ( get_edit_post_link() ) : ?>
