@@ -1,0 +1,17 @@
+/*
+*	FOOTER STYLING
+*/
+footer.site-footer{
+	padding: 1em;
+}
+.site-info{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	.footer{ margin: 15px 0; }
+
+	@media screen and (min-width: 768px){
+		flex-direction: row;
+		justify-content: space-between;
+	}
+}
