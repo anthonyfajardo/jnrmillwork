@@ -15,17 +15,12 @@
 
 	<footer id="colophon" class="site-footer">
 		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'jnrmillwork' ) ); ?>">
-				<?php
-				/* translators: %s: CMS name, i.e. WordPress. */
-				printf( esc_html__( 'Proudly powered by %s', 'jnrmillwork' ), 'WordPress' );
-				?>
-			</a>
-			<span class="sep"> | </span>
-				<?php
-				/* translators: 1: Theme name, 2: Theme author. */
-				printf( esc_html__( 'Theme: %1$s by %2$s.', 'jnrmillwork' ), 'jnrmillwork', '<a href="http://anthonyfajardo.com">Anthony Fajardo</a>' );
-				?>
+			<div class="footer-left footer">
+				<p>Copyright &copy <?php echo get_the_date('Y'); ?> by JNR Millwork</p>
+			</div>
+			<div class="footer-right footer">
+				<p>Website Developed by <a href="https://anthonyfajardo.com">Anthony Fajardo</a></p>
+			</div>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
