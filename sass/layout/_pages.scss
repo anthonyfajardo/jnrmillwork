@@ -1,0 +1,181 @@
+.section{
+	margin-top: 25px;
+	margin-bottom: 50px;
+}
+
+/**
+* BANNER SECTION
+**/
+
+.banner{
+	position: relative;
+	z-index: 1;
+
+	&:before{
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: rgba(0,0,0,0.3);
+		z-index: -1;
+	}
+
+	.tagline-container{
+		border: 1px solid red;
+		padding: 0;
+		h1.tagline{
+			text-shadow: 2px 2px 2px black;
+		}
+	}
+
+}
+
+
+/**
+* SERVICE SECTION
+**/
+
+.section-title{
+	&:after{
+		content: "";
+		display: block;
+		border-bottom: 15px solid red;
+		transform: scale(0.3);
+		position: relative;
+		bottom: 10px;
+	}
+}
+
+.service-image{
+	margin-bottom: 15px;
+}
+
+h3.service-title{
+	text-align: center;
+	margin-bottom: 25px;
+
+	@media screen and (min-width: 768px){
+		text-align: left;
+	}
+}
+
+.service-content p{
+	text-align: center;
+	// font-size: 14px;
+
+	@media screen and (min-width: 1024px){
+		text-align: left;
+		// font-size: 16px;
+	}
+}
+
+
+
+/**
+* 2-COLUMN-SECTION
+**/
+
+.two-column-section{
+
+	@media screen and (min-width: 768px){
+
+	}
+	.left-section,
+	.right-section{
+
+		padding: 3em 4em;
+
+		.content{ font-size: 16px; }
+	}
+}
+
+
+/**
+*	PORTFOLIO
+**/
+
+
+.portfolio-section{
+	
+	.portfolio-item{ 
+		margin-bottom: 15px; 
+		position: relative;
+
+		.project-image{
+			width: 100%; 
+			height: 0; 
+			padding-top: 100%;
+		}
+	}
+	.portfolio-meta{
+		height: 80px;
+		margin: 0 15px;
+		padding: 5px 10px;
+		width: calc(100% - 30px);
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		background: rgba(255,255,255,0.9);
+		h4{ margin-bottom: 0; }
+	}
+
+	ul{
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		// background: yellow;
+		line-height: 1;
+	}
+
+
+	li{ 
+		list-style: none; 
+		padding-right:  10px;
+
+		a{ 
+			font-size: 12px; 
+			color: $color__text-main;
+			font-style: italic;
+		}
+	}
+
+	.right-chevron{
+		border-radius: 50%;
+		position: absolute;
+		top: -20px;
+		right: 15px;
+		svg{
+			width: 40px;
+			height: 40px;
+		}
+
+		a{
+			circle, polygon, path{ transition: 0.3s ease-in-out; }
+			&:hover{
+				circle{
+					fill: red;
+				}
+
+				polygon, path{
+					fill: white;
+				}
+			}
+		}
+	}
+
+
+}
+
+.portfolio-button{ text-align: center; }
+
+
+.google-maps{
+	iframe{ 
+		width: 100%;
+		max-height: 300px;
+	}
+}
+

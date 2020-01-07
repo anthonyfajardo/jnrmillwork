@@ -45,9 +45,9 @@ get_header();
 		endif;
 		?>
 
+
+		<?php get_template_part('template-parts/partial-contact'); ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 
-<?php
-get_sidebar();
-get_footer();
+<?php get_footer();

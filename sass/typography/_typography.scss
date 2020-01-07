@@ -8,8 +8,16 @@ textarea {
 	font-family: $font__sans;
 	@include font-size(1);
 	line-height: $font__line-height-body;
+
+	@media screen and (min-width: 576px){
+		p{ line-height: 1.25em; }
+	}
+	@media screen and (min-width: 768px){
+		p{ line-height: 1.375em; }
+	}
 }
 
 @import "headings";
 
 @import "copy";
+

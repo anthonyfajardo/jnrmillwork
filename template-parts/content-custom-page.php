@@ -1,87 +1,321 @@
 <?php
 /**
- * Template part for displaying page content in page.php
- *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
- *
- * @package jnrmillwork
- */
+	* Template part for displaying page content in page.php
+	*
+	* @link https://developer.wordpress.org/themes/basics/template-hierarchy/
+	*
+	* @package jnrmillwork
+	*/
 
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<!-- <?php if(have_rows('section')): ?>
+	
+	<?php if(have_rows('section')): ?>
 		<?php while(have_rows('section')): the_row(); ?>
+		
+			<?php 
+				$sectionId = get_sub_field('section_id'); 
+				// $sectionId = str_replace('_', '', $sectionId);
+				$sectionId = strtolower(preg_replace("/[^a-zA-Z0-9]/", "", $sectionId));
+				
+			?>
+			
 
-			<?php $section_id = get_sub_field('section_id'); ?>
 
-			<?php if($section_id): ?>
-				<div id="<?php echo $section_id; ?>" class="<?php echo get_row_layout().'-section'; ?> section" style="border: 5px solid red;">
-					<h1>the section id is <?php echo $section_id; ?></h1>
-			<?php else: ?>
-				<div class="<?php echo get_row_layout().'-section'; ?> section" style="border: 5px solid red;">
+			<?php if($sectionId): ?>
+				<div id="<?php echo $sectionId; ?>">
 			<?php endif; ?>
 
 
-				<?php if(get_row_layout() == 'content_editor'): ?>
-					<h1>This is the <strong><?php echo get_row_layout(); ?></strong></h1>
-					<div class="content-wysiwyg">
-						<?php the_sub_field('content_wysiwyg'); ?>
-					</div>
-				<?php elseif(get_row_layout() == 'banner'): ?>
-					<?php $banner = get_sub_field('banner_sections'); ?>
-					<?php foreach($banner as $banner): ?>
-						<?php if($banner == 'background_image'): ?>
-							<?php if(have_rows('banner_background')): ?>
-								<?php while(have_rows('banner_background')): the_row(); ?>
+			<!-- Content Editor / Wysiwyg Section -->
+			<?php if(get_row_layout() == 'content_editor'): ?>
+			
+				<div class="section">
+					<div class="container">
+						<div class="row">
+							<?php the_sub_field('content_wysiwyg'); ?>
+						</div>
+					</div>								
+				</div>
 
 
-									<?php $image = get_sub_field('banner_image'); ?> 
-									<div class="banner-section" style="background: url(<?php echo $image; ?>); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; ?>">
-										<div class="tagline">
-											<h1 style="color: white; text-align: center; text-shadow: 2px 2px 1px black; font-size: 25px;">
-												A Fully Integrated<br>
-												Custom Millwork <br>
-												Provider
-											</h1>
-										</div>
-									</div>
-
-									
-									<?php if(get_sub_field('banner_width') == 'full'): ?>
-										<h3>banner width is full</h3>
-									<?php elseif(get_sub_field('banner_width') == 'contained'): ?>
-										<h3>banner width is contained</h3>
-									<?php endif; ?>
-								<?php endwhile; ?>
-							<?php endif; ?>
-						<?php elseif($banner == 'tagline'): ?>
-							<h3>tagline found!</h3>
-						<?php elseif($banner == 'call_to_action'): ?>
-							<h3>CTA found!</h3>
-						<?php endif; ?>
-					<?php endforeach; ?>
-
-				<?php elseif(get_row_layout() == 'instagram_section'): ?>
-					<h1>This is the <strong><?php echo get_row_layout(); ?></strong></h1>
-				<?php elseif(get_row_layout() == 'clients'): ?>
-					<h1>This is the <strong><?php echo get_row_layout(); ?></strong></h1>
-				<?php elseif(get_row_layout() == 'services'): ?>
-					<h1>This is the <strong><?php echo get_row_layout(); ?></strong></h1>
-				<?php elseif(get_row_layout() == 'portfolio'): ?>
-					<h1>This is the <strong><?php echo get_row_layout(); ?></strong></h1>
-				<?php elseif(get_row_layout() == '2_column_section'): ?>
-					<h1>This is the <strong><?php echo get_row_layout(); ?></strong></h1>
-				<?php elseif(get_row_layout() == 'profile_section'): ?>
-					<h1>This is the <strong><?php echo get_row_layout(); ?></strong></h1>
-				<?php endif; ?>
-
+			<!-- Banner Section -->
+			<?php elseif(get_row_layout() == 'banner'): ?>
 				
-			</div>
+				<?php $bannerSections = get_sub_field('banner_sections');?>
+
+				<?php foreach($bannerSections as $bannerSection): ?>
+
+					<?php  
+						if($bannerSection == 'background_image'){
+							$bannerBg = get_sub_field('banner_background');
+							if($bannerBg){
+								$bannerImage = $bannerBg['banner_image'];
+								$bannerWidth = $bannerBg['banner_width'];
+							}
+						}elseif($bannerSection == 'tagline'){
+							$bannerTagline = get_sub_field('banner_tagline');
+							if($bannerTagline){
+								$bannerTag = $bannerTagline['tagline'];
+								$bannerJust = $bannerTagline['tagline_justification'];
+								$bannerColor = $bannerTagline['font_color'];
+								$taglineWidth = $bannerTagline['tagline_width'];
+							}
+						}elseif($bannerSection == 'call_to_action'){
+							$ctaParts = get_sub_field('call_to_action');
+							if($ctaParts){
+								$buttonText = $ctaParts['button_text'];
+								$buttonLink = $ctaParts['link'];
+								$buttonPosition = $ctaParts['call_to_action_position'];
+								$buttonBg = $ctaParts['button_background'];
+								$buttonTextColor = $ctaParts['button_text_color'];
+							}
+						}
+					?>
+						
+				<?php endforeach; ?>
+
+				<div class="<?php echo $bannerWidth; ?> banner" style="background: url(<?php echo $bannerImage; ?>); background-size: cover; background-position: center; min-height: 100vh;display: flex; flex-direction: column; justify-content: center; align-items: center;">
+					
+					<div class="<?php echo $taglineWidth; ?> tagline-container">
+						<h1 class="tagline" style="color: <?php echo $bannerColor; ?>; text-align: <?php echo $bannerJust; ?>"><?php echo $bannerTag; ?></h1>
+
+						<div class="banner-button" style="width: 100%; text-align: <?php echo $buttonPosition; ?> ">
+							<a href="<?php echo $buttonLink; ?>" style="padding: 0.5em 1em; background: <?php echo $buttonBg; ?>; color: <?php echo $buttonTextColor; ?>; "><?php echo $buttonText; ?></a>	
+						</div>
+					</div>
+						
+
+				</div>
+
+
+			<!-- Services Section -->
+			<?php elseif(get_row_layout() == 'services'): ?>
+				<?php  
+					$title = get_sub_field('service_section_title');
+
+				?>
+
+				<div class="container section">
+					<div class="row">
+						<div class="col-12 text-center section-title">
+							<h2><?php echo $title ?></h2>
+						</div>
+					</div>
+					
+					
+					<?php if(have_rows('service')): ?>
+						<div class="row">
+							<?php while(have_rows('service')): the_row(); ?>
+								
+								<?php  
+									$serviceTitle = get_sub_field('title');
+									$image = get_sub_field('image');
+									$serviceContent = get_sub_field('description');
+								?>								
+
+								
+								
+								<div class="col-12 col-md-4 service">
+									<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="image-fluid service-image">
+									<h3 class="service-title"><?php echo $serviceTitle; ?></h3>
+									<div class="service-content">
+										<?php echo $serviceContent; ?>
+									</div>
+								</div>
+
+						
+
+							<?php endwhile; ?>
+						</div>
+					<?php endif; ?>
+					
+				</div>
+
+
+			<!-- TWO COLUMN SECTION -->
+			<?php elseif(get_row_layout() == 'two_column_section'): ?>
+				<?php  
+					$leftSection = get_sub_field('left_section');
+					$rightSection = get_sub_field('right_section');
+
+					// dump($leftSection);
+					// dump($rightSection);
+				?>
+				
+				
+				<div class="container ">
+					<div class="row two-column-section section">
+						
+							<div class="left-section col-12 col-sm-12 col-md-6">
+
+								<?php if($leftSection['section_content'] == 'text'): ?>
+							
+									<div class="text-section">
+
+										<h2><?php echo $leftSection['title']; ?></h2>
+
+										<div class="content">
+											<p><?php echo $leftSection['content']; ?></p>
+										</div>
+
+									</div>
+									
+								<?php elseif($leftSection['section_content'] == 'image'): ?>
+
+									<div class="image-section"  style="background: url(<?php echo $leftSection['background_image']; ?>); background-size: cover; background-position: center; background-attachment: <?php echo $leftSection['background_property']; ?>; position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+
+
+								<?php endif; ?>
+							</div>
+
+
+							<div class="right-section col-12 col-sm-12 col-md-6" style="position: relative;"> 
+								<?php if($rightSection['section_content'] == 'text'): ?>
+									<div class="text-section">
+
+										<h2><?php echo $rightSection['title']; ?></h2>
+
+										<div class="content">
+											<p><?php echo $rightSection['content']; ?></p>
+										</div>
+
+									</div>
+								<?php elseif($rightSection['section_content'] == 'image'): ?>
+									
+									<div class="image-section"  style="background: url(<?php echo $rightSection['background_image']; ?>); background-size: cover; background-position: center; background-attachment: <?php echo $rightSection['background_property']; ?>; position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+
+								<?php endif; ?>					
+							</div>
+					</div>
+				</div>
+
+
+
+
+			<!-- PORTFOLIO SECTION -->
+			<?php elseif(get_row_layout() == 'portfolio'): ?>
+				<div class="portfolio-section">
+
+					<div class="container">
+						<div class="row">
+							<div class="col-12 text-center section-title">
+								<h2><?php the_sub_field('portfolio_title'); ?></h2>
+								<?php 
+									if(get_sub_field('portfolio_description')){
+										echo '<p>'.get_sub_field('portfolio_description').'</p>';
+									}
+								?>
+							</div>
+						</div>
+					</div>
+
+					
+					<?php get_template_part('template-parts/partial-portfolio'); ?>
+
+					<div class="container">
+						<div class="portfolio-button">
+							<a href="<?php the_sub_field('portfolio_link'); ?>" class="btn btn-primary portfolio-page-button"><?php the_sub_field('button_text'); ?></a>
+						</div>						
+					</div>					
+				</div>
+
+
+
+			<!-- CLIENTS SECTION -->
+
+			<?php elseif(get_row_layout() == 'clients'): ?>
+	
+				<div class="clients-section section">
+					<div class="container">
+						<div class="row">
+							<div class="col-12 col-sm-12 col-md-5 col-lg-4" style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column;">
+								<h2><?php the_sub_field('clients_title'); ?></h2>
+								<p><?php the_sub_field('clients_description'); ?></p>
+							</div>
+							<div class="col-12 col-sm-12 col-md-7 col-lg-8">
+								<div class="row">
+									
+										<?php $images = get_sub_field('client_logo_gallery'); ?>
+										<?php if($images): ?>
+
+											<?php foreach($images as $image): ?>
+												<div class="col-6 col-sm-6 col-md-3" >
+													<div class="image" style="background: url(<?php echo $image; ?>); background-size: contain; background-position: center; width: 75%; height: 0; padding-top: 100%; background-repeat: no-repeat;">
+														
+													</div>
+												</div>
+											<?php endforeach; ?>
+
+										<?php endif; ?>
+
+								</div>
+							</div>
+							
+						</div>
+					</div>
+
+				</div>
+
+
+			<!-- PROFILE SECTION -->
+			<?php elseif(get_row_layout() == 'profile_section'): ?>
+
+				<?php  
+					$leftSection = get_sub_field('left_section');
+					$rightSection = get_sub_field('right_section');				
+				?>
+
+				<div class="container section">
+					<div class="row">
+						<?php if($leftSection['section_content'] == 'image'): ?>
+							<div class="col-12 col-sm-12 col-md-4" style="padding-left: 0;">
+								<?php if($leftSection['image']): ?>
+									<div class="image" style="background: url(<?php echo $leftSection['image']; ?>); background-size: cover; background-position: center; height: 0; width: 100%; padding-top: 120%;"></div>
+								<?php else: ?>
+									<div class="image" style="width: 100%; height: 0; padding-top: 120%; background: #cccccc;"></div>
+								<?php endif; ?>
+							</div>
+						<?php elseif($leftSection['section_content'] == 'text'): ?>
+							<div class="col-12 col-sm-12 col-md-6 offset-md-2 text-right">
+								<h1><?php echo $leftSection['name']; ?></h1>
+								<h3><?php echo $leftSection['position']; ?></h3>
+								<p><?php echo $leftSection['description']; ?></p>
+							</div>
+						<?php endif; ?>
+
+						<?php if($rightSection['section_content'] == 'image'): ?>
+							<div class="col-12 col-sm-12 col-md-4" style="padding-right: 0;">
+								<div class="image" style="background: url(<?php echo $rightSection['image']; ?>); background-size: cover; background-position: center; height: 0; width: 100%; padding-top: 120%;"></div>
+							</div>
+						<?php elseif($rightSection['section_content'] == 'text'): ?>
+							<div class="col-12 col-sm-12 col-md-6">
+									<h1><?php echo $rightSection['name']; ?></h1>
+									<h3><?php echo $rightSection['position']; ?></h3>
+									<p><?php echo $rightSection['description']; ?></p>
+							</div>
+						<?php endif; ?>
+					</div>
+				</div>
+
+
+			<!-- INSTAGRAM SECTION -->
+
+			<?php elseif(get_row_layout() == 'instagram_section'): ?>
+				
+				<div class="instagram-section section">
+					<?php $instagram = get_sub_field('instagram_shortcode'); ?>
+					<?php echo do_shortcode($instagram); ?>
+				</div>
+
+			<?php endif; ?>
+
 
 
 		<?php endwhile; ?>
-	<?php endif; ?> -->
+	<?php endif; ?>
+
 
 
 	<?php if ( get_edit_post_link() ) : ?>

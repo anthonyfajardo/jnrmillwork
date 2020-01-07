@@ -172,26 +172,6 @@ add_action( 'widgets_init', 'jnrmillwork_widgets_init' );
  */
 
 
-function jnrmillwork_styles() {
-	wp_enqueue_style( 'jnrmillwork-style', get_stylesheet_uri() );
-
-	wp_enqueue_style('google-fonts', jnrmillwork_fonts_url(), array(), null);
-}
-add_action( 'wp_enqueue_scripts', 'jnrmillwork_styles');
-
-
-function jnrmillwork_scripts() {
-
-	wp_enqueue_script( 'jnrmillwork-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
-
-	wp_enqueue_script('minified-js', get_template_directory_uri(). '/scripts.min.js', array('jquery'), '20151215', true);
-
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
-}
-add_action( 'wp_enqueue_scripts', 'jnrmillwork_scripts' );
-
 
 /**
 * LOADING BOOTSTRAP 4 
@@ -243,6 +223,28 @@ add_filter('script_loader_tag', 'add_popper_script_attributes', 10, 2);
 add_action( 'wp_enqueue_scripts', 'enqueue_load_bootstrap' );
 
 
+
+function jnrmillwork_styles() {
+	wp_enqueue_style( 'jnrmillwork-style', get_stylesheet_uri() );
+
+	wp_enqueue_style('google-fonts', jnrmillwork_fonts_url(), array(), null);
+}
+add_action( 'wp_enqueue_scripts', 'jnrmillwork_styles');
+
+
+function jnrmillwork_scripts() {
+
+	wp_enqueue_script( 'jnrmillwork-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20151215', true );
+
+	wp_enqueue_script('minified-js', get_template_directory_uri(). '/scripts.min.js', array('jquery'), '20151215', true);
+
+	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
+		wp_enqueue_script( 'comment-reply' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'jnrmillwork_scripts' );
+
+
 /**
  * Implement the Custom Header feature.
  */
@@ -277,3 +279,12 @@ function dump($obj) {
 	print_r($obj);
 	echo "</pre>";
 }
+
+function featured_image_url($currentPost){
+	$image_id = get_post_thumbnail_id($currentPost->ID);
+	$image_url= wp_get_attachment_url($image_id);
+	return $image_url;
+}
+
+
+
