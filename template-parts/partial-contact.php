@@ -4,19 +4,19 @@
 	));
 ?>
 
+<?php if(is_page('contact')): ?>
+	<!-- <?php $pageMargin = 'contact-margin-top'; ?> -->
+<?php endif; ?>
+
 <?php if ( $contact->have_posts() ) : ?> 
 	<?php while ( $contact->have_posts() ) : $contact->the_post(); ?>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-12 col-sm-12">
-					<h1 class="text-center section-title"><?php the_title(); ?></h1>
-				</div>
-			</div>			
-			<div class="row">
-				<div class="col-12 col-sm-12 col-md-12">
-					<div class="google-maps section">
-						<?php the_field('google_maps_embed_link'); ?>
-					</div>					
+		<div class="container contact-section-wrapper <?php echo $pageMargin; ?>">
+				<div class="section-title">
+					<h2 class="text-center"><?php the_title(); ?></h2>
+				</div>				
+			<div class="row section">
+				<div class="col-12 col-sm-12 col-md-12 google-maps">		
+					<?php the_field('google_maps_embed_link'); ?>
 				</div>
 			</div>
 		</div>
@@ -28,18 +28,21 @@
 
 
 		<div class="container">
-			<div class="row">
+			<div class="row contact-wrapper">
 				<div class="col-12 col-sm-12 col-md-6 left-contact-section">
 					<?php if($leftSection['section_content'] == 'Contact Form'): ?>
 						<?php $form = $leftSection['contact_form']; ?>
 						<?php echo do_shortcode($form); ?>
 					<?php elseif($leftSection['section_content'] == 'Contact Info'): ?>
-						
-						<div class="address"> <h3>Address: </h3><?php echo $leftSection['address']; ?> </div>
-						<div class="email"> <h3>E-mail: </h3><?php echo $leftSection['email']; ?> </div>
-						<div class="phone"> <h3>Phone Number: </h3><?php echo $leftSection['phone_number']; ?> </div>
-						<div class="fax"> <h3>Fax Number: </h3><?php echo $leftSection['fax_number']; ?> </div>
-						<h2><?php echo $leftSection['contact_page_tagline']; ?></h2>
+						<div class="contact-container">
+							<div class="address contact-line"> <h2>Address: </h2><?php echo $leftSection['address']; ?> </div>
+							<div class="email contact-line"> <span>E-mail: </span><?php echo $leftSection['email']; ?> </div>
+							<div class="phone contact-line"> <span>Phone Number: </span><?php echo $leftSection['phone_number']; ?> </div>
+							<div class="fax contact-line"> <span>Fax Number: </span><?php echo $leftSection['fax_number']; ?> </div>
+						</div> <!-- /.contact-container -->
+
+						<h4 class="contact-tagline"><?php echo $leftSection['contact_page_tagline']; ?></h4>
+						<?php get_template_part('template-parts/partial-social-media'); ?>
 
 					<?php endif; ?>
 				</div> <!-- /.left-contact-section -->
@@ -49,11 +52,16 @@
 						<?php $form = $rightSection['contact_form']; ?>
 						<?php echo do_shortcode($form); ?>
 					<?php elseif($rightSection['section_content'] == 'Contact Info'): ?>
-						<div class="address"> <h3>Address: </h3><?php echo $rightSection['address']; ?> </div>
-						<div class="email"> <h3>E-mail: </h3><?php echo $rightSection['email']; ?> </div>
-						<div class="phone"> <h3>Phone Number: </h3><?php echo $rightSection['phone_number']; ?> </div>
-						<div class="fax"> <h3>Fax Number: </h3><?php echo $rightSection['fax_number']; ?> </div>
-						<h2><?php echo $leftSection['contact_page_tagline']; ?></h2>
+						<div class="contact-container">
+							<div class="address contact-line"> <h2>Address: </h2><?php echo $rightSection['address']; ?> </div>
+							<div class="email contact-line"> <span>E-mail: </span><?php echo $rightSection['email']; ?> </div>
+							<div class="phone contact-line"> <span>Phone Number: </span><?php echo $rightSection['phone_number']; ?> </div>
+							<div class="fax contact-line"> <span>Fax Number: </span><?php echo $rightSection['fax_number']; ?> </div>
+						</div> <!-- /.contact-container -->
+
+						<h4 class="contact-tagline"><?php echo $leftSection['contact_page_tagline']; ?></h4>
+						<?php get_template_part('template-parts/partial-social-media'); ?>
+
 					<?php endif; ?>					
 				</div> <!-- /.right-contact-section -->
 			</div>

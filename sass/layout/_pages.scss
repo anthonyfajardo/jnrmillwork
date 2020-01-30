@@ -3,13 +3,29 @@
 	margin-bottom: 50px;
 }
 
+.service,
+.left-section, .right-section{
+	padding-left: 0;
+	padding-right: 0;
+}
+
+
+
+
+
 /**
 * BANNER SECTION
 **/
 
 .banner{
+	margin-bottom: 50px;
 	position: relative;
 	z-index: 1;
+	 min-height: 100vh;
+	 display: flex; 
+	 flex-direction: column;
+	 justify-content: center;
+	 align-items: center;
 
 	&:before{
 		content: "";
@@ -23,159 +39,306 @@
 	}
 
 	.tagline-container{
-		border: 1px solid red;
 		padding: 0;
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
 		h1.tagline{
 			text-shadow: 2px 2px 2px black;
+			font-size: 1.75em;
+			line-height: 1.5em;
+			font-weight: 400;
+			animation-duration: 4s;
 		}
 	}
-
-}
-
-
-/**
-* SERVICE SECTION
-**/
-
-.section-title{
-	&:after{
-		content: "";
-		display: block;
-		border-bottom: 15px solid red;
-		transform: scale(0.3);
-		position: relative;
-		bottom: 10px;
-	}
-}
-
-.service-image{
-	margin-bottom: 15px;
-}
-
-h3.service-title{
-	text-align: center;
-	margin-bottom: 25px;
 
 	@media screen and (min-width: 768px){
-		text-align: left;
-	}
-}
+		min-height: 50vh;
 
-.service-content p{
-	text-align: center;
-	// font-size: 14px;
+		.tagline-container{
+			h1.tagline{
+				font-size: 2.25em;
 
-	@media screen and (min-width: 1024px){
-		text-align: left;
-		// font-size: 16px;
-	}
-}
-
-
-
-/**
-* 2-COLUMN-SECTION
-**/
-
-.two-column-section{
-
-	@media screen and (min-width: 768px){
-
-	}
-	.left-section,
-	.right-section{
-
-		padding: 3em 4em;
-
-		.content{ font-size: 16px; }
-	}
-}
-
-
-/**
-*	PORTFOLIO
-**/
-
-
-.portfolio-section{
-	
-	.portfolio-item{ 
-		margin-bottom: 15px; 
-		position: relative;
-
-		.project-image{
-			width: 100%; 
-			height: 0; 
-			padding-top: 100%;
-		}
-	}
-	.portfolio-meta{
-		height: 80px;
-		margin: 0 15px;
-		padding: 5px 10px;
-		width: calc(100% - 30px);
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		background: rgba(255,255,255,0.9);
-		h4{ margin-bottom: 0; }
-	}
-
-	ul{
-		padding: 0;
-		margin: 0;
-		display: flex;
-		flex-wrap: wrap;
-		// background: yellow;
-		line-height: 1;
-	}
-
-
-	li{ 
-		list-style: none; 
-		padding-right:  10px;
-
-		a{ 
-			font-size: 12px; 
-			color: $color__text-main;
-			font-style: italic;
-		}
-	}
-
-	.right-chevron{
-		border-radius: 50%;
-		position: absolute;
-		top: -20px;
-		right: 15px;
-		svg{
-			width: 40px;
-			height: 40px;
-		}
-
-		a{
-			circle, polygon, path{ transition: 0.3s ease-in-out; }
-			&:hover{
-				circle{
-					fill: red;
-				}
-
-				polygon, path{
-					fill: white;
-				}
 			}
 		}
 	}
 
+	@media screen and (min-width: 992px){
+
+		.tagline-container{
+			h1.tagline{
+				font-size: 3em;
+				font-weight: 400;
+			}
+		}
+	}
+
+	@media screen and (min-width: 1024px){
+		min-height: 100vh;
+	}
+
+	@media screen and (min-width: 1440px){
+		.tagline-container{
+			h1.tagline{
+				font-size: 56px;
+			}
+		}
+	}
 
 }
 
-.portfolio-button{ text-align: center; }
+.section-title{
+	margin-bottom: 15px;
+	&:after{
+		content: "";
+		display: block;
+		border-bottom: 15px solid red;
+		transform: scale(0.2);
+		position: relative;
+		bottom: 5px;
 
+		@media screen and (min-width: 768px){
+			transform: scale(0.1);
+			border-bottom: 25px solid red;
+			bottom: 10px;
+		}
 
-.google-maps{
-	iframe{ 
-		width: 100%;
-		max-height: 300px;
+		@media screen and (min-width: 1280px){
+			transform: scale(0.08);
+			border-bottom: 30px solid red;
+		}
+	}	
+}
+
+/**
+* SERVICES SECTION
+**/
+
+.service{ 
+	margin-bottom: 15px;
+	img{ margin-bottom: 25px; }
+	
+	@media screen and (min-width: 768px){
+		padding-left: 15px; 
+		padding-right: 15px;
+		h3.service-title{ margin-bottom: 15px; }
 	}
 }
 
+
+/**
+* TWO-COLUMN-SECTION
+**/
+
+.two-column-section{
+	.left-section, .right-section{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 25px;
+	}
+
+	.left-section .text-section,
+	.right-section .text-section{
+		// border: 5px solid red;
+	}
+
+	@media screen and (min-width: 1024px){
+		.left-section .text-section{ padding-right: 2em; }
+		.right-section .text-section{ padding-left: 2em; }
+	}
+
+
+}
+
+.image-wrapper{ 
+	width: 100%;
+	height: 0;
+	padding-top: 80%;
+	margin-bottom: 15px;
+
+	@media screen and (min-width: 768px){
+		padding-top: 50%;
+	}
+
+	@media screen and (min-width: 1024px){
+		padding-top: 100%;
+	}
+
+	@media screen and (min-width: 1320px){
+		padding-top: 75%;
+	}
+}
+
+.text-section{ 
+	width: 100%;
+}
+
+a.btn{ 
+	background: none; 
+	border: 1px solid $color__text-main;
+	color: $color__text-main;
+	border-radius: 5px;
+	transition: 0.3s ease-in-out;
+
+	&:hover{
+		border: 1px solid red;
+		background: red!important;
+		color: white;
+	}
+}
+
+
+
+/**
+*  CLIENT SECTION
+**/
+
+.client{ 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h2.underline-left{
+	margin-bottom: 25px;
+	line-height: 1.5;
+	&:after{
+		content: "";
+		display: block;
+		width: 60px;
+		border: 2px solid red;
+		// border-bottom: 2px solid red;
+	}
+}
+
+
+/**
+* PROFILE SECTION
+**/
+
+.profile-image{
+	height: 0;
+	padding-top: 120%;
+	position: relative;
+
+	.image{
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+	}
+}
+
+
+@media screen and (min-width: 768px){
+
+	.profile-image{
+		padding-top: 60%;
+	}
+
+	.profile-content{
+		h1{ margin-top: 15px; }
+	}
+}
+
+@media screen and (min-width: 1024px){
+	.profile-image{
+		padding-top: 50%;
+	}
+
+	.left-text{
+		padding-right: 30px;
+	}
+
+	.right-text{
+		padding-left: 30px;
+	}
+}
+
+
+@media screen and (min-width: 1440px){
+	.left-text{ padding-right: 50px; }
+	.right-text{ padding-left: 50px; }
+	.profile-image{
+		padding-top: 40%;
+	}
+}
+
+.instagram-section{
+	margin-bottom: 50px;
+}
+
+
+
+
+/**
+*  CONTACT PAGE
+**/
+
+.google-maps{
+	height: 75vh;
+
+	iframe{
+		width: 100%;
+		height: 100%;
+	}
+
+
+	@media screen and (min-width: 768px){
+		height: 450px;
+	}
+}
+
+.left-contact-section,
+.right-contact-section{
+	
+	margin-bottom: 50px;
+
+	.contact-container{
+		padding-bottom: 10px;
+
+		.contact-line{
+			margin-bottom: 5px;
+			span{
+				color: black;
+				font-weight: 900;
+			}
+		}
+
+		.address{
+			margin-bottom: 25px;
+		}
+
+
+		&:after{
+			content: "";
+			display: inline-block;
+			width: 30%;
+			border-bottom: 5px solid red;
+			border-radius: 25px;
+		}
+	}
+	@media screen and (min-width: 992px){
+		.contact-container{
+			.address{
+				h2{ font-size: 36px; }
+			}
+		}
+	}
+	@media screen and (min-width: 1280px){ font-size: 18px; }
+	@media screen and (min-width: 1440px){ font-size: 21px; }
+
+	h4.contact-tagline{
+		margin-bottom: 25px;
+	}
+}
+
+.wpforms-title{
+	font-weight: 900!important;
+	color: black;
+	font-size: 32px!important;
+}

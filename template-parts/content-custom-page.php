@@ -28,8 +28,10 @@
 			<?php endif; ?>
 
 
-			<!-- Content Editor / Wysiwyg Section -->
-			<?php if(get_row_layout() == 'content_editor'): ?>
+			<?php
+				/* Content Editor / Wysiwyg Section */ 
+				if(get_row_layout() == 'content_editor'): 
+			?>
 			
 				<div class="section">
 					<div class="container">
@@ -39,9 +41,8 @@
 					</div>								
 				</div>
 
-
-			<!-- Banner Section -->
-			<?php elseif(get_row_layout() == 'banner'): ?>
+			<?php /* Banner Section */
+				elseif(get_row_layout() == 'banner'): ?>
 				
 				<?php $bannerSections = get_sub_field('banner_sections');?>
 
@@ -76,22 +77,29 @@
 						
 				<?php endforeach; ?>
 
-				<div class="<?php echo $bannerWidth; ?> banner" style="background: url(<?php echo $bannerImage; ?>); background-size: cover; background-position: center; min-height: 100vh;display: flex; flex-direction: column; justify-content: center; align-items: center;">
+
+
+				<header class="<?php echo $bannerWidth; ?> banner" style="background: url(<?php echo $bannerImage; ?>); background-size: cover; background-position: center;">
 					
-					<div class="<?php echo $taglineWidth; ?> tagline-container">
-						<h1 class="tagline" style="color: <?php echo $bannerColor; ?>; text-align: <?php echo $bannerJust; ?>"><?php echo $bannerTag; ?></h1>
+					<div class="<?php echo $taglineWidth; ?> tagline-container" >
 
-						<div class="banner-button" style="width: 100%; text-align: <?php echo $buttonPosition; ?> ">
-							<a href="<?php echo $buttonLink; ?>" style="padding: 0.5em 1em; background: <?php echo $buttonBg; ?>; color: <?php echo $buttonTextColor; ?>; "><?php echo $buttonText; ?></a>	
-						</div>
-					</div>
-						
+						<?php if($bannerTagline): ?>
+							<h1 class="tagline animated fadeInUp" style="color: <?php echo $bannerColor; ?>; text-align: <?php echo $bannerJust; ?>"><?php echo $bannerTag; ?></h1>
+						<?php endif; ?>
 
-				</div>
+						<?php if($ctaParts): ?>
+
+							<div class="banner-button" style="width: 100%; text-align: <?php echo $buttonPosition; ?> ">
+								<a href="<?php echo $buttonLink; ?>" style="padding: 0.5em 1em; background: <?php echo $buttonBg; ?>; color: <?php echo $buttonTextColor; ?>; "><?php echo $buttonText; ?></a>	
+							</div>
+						<?php endif; ?>
+
+					</div> <!-- /.tagline-container -->
+				</header>
 
 
-			<!-- Services Section -->
-			<?php elseif(get_row_layout() == 'services'): ?>
+			<?php /* Services Section */
+				elseif(get_row_layout() == 'services'): ?>
 				<?php  
 					$title = get_sub_field('service_section_title');
 
@@ -99,8 +107,8 @@
 
 				<div class="container section">
 					<div class="row">
-						<div class="col-12 text-center section-title">
-							<h2><?php echo $title ?></h2>
+						<div class="col-12 text-center">
+							<h2 class="section-title"><?php echo $title ?></h2>
 						</div>
 					</div>
 					
@@ -117,7 +125,7 @@
 
 								
 								
-								<div class="col-12 col-md-4 service">
+								<div class="col-12 col-md-6 col-lg-4 service">
 									<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" class="image-fluid service-image">
 									<h3 class="service-title"><?php echo $serviceTitle; ?></h3>
 									<div class="service-content">
@@ -134,57 +142,79 @@
 				</div>
 
 
-			<!-- TWO COLUMN SECTION -->
-			<?php elseif(get_row_layout() == 'two_column_section'): ?>
+			<?php /*  TWO COLUMN SECTION  */
+				elseif(get_row_layout() == 'two_column_section'): ?>
 				<?php  
 					$leftSection = get_sub_field('left_section');
 					$rightSection = get_sub_field('right_section');
-
-					// dump($leftSection);
-					// dump($rightSection);
+					$sectionWidth = get_sub_field('section_width');
 				?>
 				
 				
-				<div class="container ">
-					<div class="row two-column-section section">
-						
-							<div class="left-section col-12 col-sm-12 col-md-6">
+				<div class="container section">
 
+					<div class="row two-column-section">
+							
+							<?php /*LEFT SECTION*/  ?>
+							<div class="left-section col-12 col-sm-12 col-lg-6 order-last order-lg-first">
+
+								<!-- Text Section -->
 								<?php if($leftSection['section_content'] == 'text'): ?>
 							
 									<div class="text-section">
 
-										<h2><?php echo $leftSection['title']; ?></h2>
+										<div class="text-wrapper">
+											<h2 class="underline-left"><?php echo $leftSection['title']; ?></h2>
 
-										<div class="content">
-											<p><?php echo $leftSection['content']; ?></p>
+											<div class="content">
+												<p><?php echo $leftSection['content']; ?></p>
+												<?php if($leftSection['call_to_action']['call_to_action_link'] && $leftSection['call_to_action']['button_text']): ?>
+													<a class="btn" href="<?php echo $rightSection['call_to_action']['call_to_action_link']; ?>"><?php echo $leftSection['call_to_action']['button_text']; ?></a>
+												<?php endif; ?>
+											</div>
 										</div>
 
 									</div>
-									
+								
+								<!-- Image Section -->
 								<?php elseif($leftSection['section_content'] == 'image'): ?>
 
-									<div class="image-section"  style="background: url(<?php echo $leftSection['background_image']; ?>); background-size: cover; background-position: center; background-attachment: <?php echo $leftSection['background_property']; ?>; position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+									<div class="image-wrapper" style="position: relative;">
+										<div class="image-section"  style="background: url(<?php echo $leftSection['background_image']; ?>); background-size: cover; background-position: center; background-attachment: <?php echo $leftSection['background_property']; ?>; position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+									</div> <!-- /.image-wrapper -->
 
 
 								<?php endif; ?>
 							</div>
 
+							
+							<?php /*RIGHT SECTION*/  ?>
+							<div class="right-section col-12 col-sm-12 col-lg-6"> 
 
-							<div class="right-section col-12 col-sm-12 col-md-6" style="position: relative;"> 
+								<!-- Text Section -->
 								<?php if($rightSection['section_content'] == 'text'): ?>
+
 									<div class="text-section">
+										
+										<div class="text-wrapper">
+											<h2 class="underline-left"><?php echo $rightSection['title']; ?></h2>
 
-										<h2><?php echo $rightSection['title']; ?></h2>
-
-										<div class="content">
-											<p><?php echo $rightSection['content']; ?></p>
+											<div class="content">
+												<p><?php echo $rightSection['content']; ?></p>	
+												<?php if($rightSection['call_to_action']['call_to_action_link'] && $rightSection['call_to_action']['button_text']): ?>
+													<a class="btn btn-primary" href="<?php echo $rightSection['call_to_action']['call_to_action_link']; ?>"><?php echo $rightSection['call_to_action']['button_text']; ?></a>
+												<?php endif; ?>
+											</div>
 										</div>
 
 									</div>
+
+								<!-- Image Section -->
 								<?php elseif($rightSection['section_content'] == 'image'): ?>
 									
-									<div class="image-section"  style="background: url(<?php echo $rightSection['background_image']; ?>); background-size: cover; background-position: center; background-attachment: <?php echo $rightSection['background_property']; ?>; position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+									<div class="image-wrapper" style="position: relative;">
+										<div class="image-section"  style="background: url(<?php echo $rightSection['background_image']; ?>); background-size: cover; background-position: center; background-attachment: <?php echo $rightSection['background_property']; ?>; position: absolute; top: 0; left: 0; right: 0; bottom: 0;"></div>
+									</div> <!-- /.image-wrapper -->
 
 								<?php endif; ?>					
 							</div>
@@ -192,16 +222,14 @@
 				</div>
 
 
+			<?php /* PORTFOLIO SECTION */
+				elseif(get_row_layout() == 'portfolio'): ?>
+				<div class="portfolio-section section">
 
-
-			<!-- PORTFOLIO SECTION -->
-			<?php elseif(get_row_layout() == 'portfolio'): ?>
-				<div class="portfolio-section">
-
-					<div class="container">
+					<div class="container portfolio-title">
 						<div class="row">
-							<div class="col-12 text-center section-title">
-								<h2><?php the_sub_field('portfolio_title'); ?></h2>
+							<div class="col-12 text-center">
+								<h2 class="section-title"><?php the_sub_field('portfolio_title'); ?></h2>
 								<?php 
 									if(get_sub_field('portfolio_description')){
 										echo '<p>'.get_sub_field('portfolio_description').'</p>';
@@ -222,16 +250,14 @@
 				</div>
 
 
-
-			<!-- CLIENTS SECTION -->
-
-			<?php elseif(get_row_layout() == 'clients'): ?>
+			<?php /* CLIENTS SECTION */
+				elseif(get_row_layout() == 'clients'): ?>
 	
 				<div class="clients-section section">
 					<div class="container">
 						<div class="row">
 							<div class="col-12 col-sm-12 col-md-5 col-lg-4" style="display: flex; justify-content: center; align-items: flex-start; flex-direction: column;">
-								<h2><?php the_sub_field('clients_title'); ?></h2>
+								<h2 class="underline-left"><?php the_sub_field('clients_title'); ?></h2>
 								<p><?php the_sub_field('clients_description'); ?></p>
 							</div>
 							<div class="col-12 col-sm-12 col-md-7 col-lg-8">
@@ -241,7 +267,7 @@
 										<?php if($images): ?>
 
 											<?php foreach($images as $image): ?>
-												<div class="col-6 col-sm-6 col-md-3" >
+												<div class="col-6 col-sm-6 col-md-3 client" >
 													<div class="image" style="background: url(<?php echo $image; ?>); background-size: contain; background-position: center; width: 75%; height: 0; padding-top: 100%; background-repeat: no-repeat;">
 														
 													</div>
@@ -259,8 +285,8 @@
 				</div>
 
 
-			<!-- PROFILE SECTION -->
-			<?php elseif(get_row_layout() == 'profile_section'): ?>
+			<?php /* PROFILE SECTION */
+				elseif(get_row_layout() == 'profile_section'): ?>
 
 				<?php  
 					$leftSection = get_sub_field('left_section');
@@ -270,15 +296,15 @@
 				<div class="container section">
 					<div class="row">
 						<?php if($leftSection['section_content'] == 'image'): ?>
-							<div class="col-12 col-sm-12 col-md-4" style="padding-left: 0;">
+							<div class="col-12 col-sm-12 col-md-6 col-lg-5 profile-image left-image">
 								<?php if($leftSection['image']): ?>
-									<div class="image" style="background: url(<?php echo $leftSection['image']; ?>); background-size: cover; background-position: center; height: 0; width: 100%; padding-top: 120%;"></div>
+									<div class="image" style="background: url(<?php echo $leftSection['image']; ?>); background-size: cover; background-position: center;"></div>
 								<?php else: ?>
 									<div class="image" style="width: 100%; height: 0; padding-top: 120%; background: #cccccc;"></div>
 								<?php endif; ?>
 							</div>
 						<?php elseif($leftSection['section_content'] == 'text'): ?>
-							<div class="col-12 col-sm-12 col-md-6 offset-md-2 text-right">
+							<div class="col-12 col-sm-12 col-md-6 text-right profile-content left-text">
 								<h1><?php echo $leftSection['name']; ?></h1>
 								<h3><?php echo $leftSection['position']; ?></h3>
 								<p><?php echo $leftSection['description']; ?></p>
@@ -286,11 +312,11 @@
 						<?php endif; ?>
 
 						<?php if($rightSection['section_content'] == 'image'): ?>
-							<div class="col-12 col-sm-12 col-md-4" style="padding-right: 0;">
-								<div class="image" style="background: url(<?php echo $rightSection['image']; ?>); background-size: cover; background-position: center; height: 0; width: 100%; padding-top: 120%;"></div>
+							<div class="col-12 col-sm-12 col-md-6 col-lg-5 profile-image right-image">
+								<div class="image" style="background: url(<?php echo $rightSection['image']; ?>); background-size: cover; background-position: center;"></div>
 							</div>
 						<?php elseif($rightSection['section_content'] == 'text'): ?>
-							<div class="col-12 col-sm-12 col-md-6">
+							<div class="col-12 col-sm-12 col-md-6 profile-content right-text">
 									<h1><?php echo $rightSection['name']; ?></h1>
 									<h3><?php echo $rightSection['position']; ?></h3>
 									<p><?php echo $rightSection['description']; ?></p>
@@ -299,17 +325,19 @@
 					</div>
 				</div>
 
-
-			<!-- INSTAGRAM SECTION -->
-
-			<?php elseif(get_row_layout() == 'instagram_section'): ?>
-				
-				<div class="instagram-section section">
-					<?php $instagram = get_sub_field('instagram_shortcode'); ?>
-					<?php echo do_shortcode($instagram); ?>
+			<?php /* INSTAGRAM SECTION */
+				elseif(get_row_layout() == 'instagram_section'): ?>
+				<div class="container">	
+					<div class="instagram-section">
+						<?php $instagram = get_sub_field('instagram_shortcode'); ?>
+						<?php echo do_shortcode($instagram); ?>
+					</div>
 				</div>
 
+
 			<?php endif; ?>
+
+		</div> <?php /* /.section ID */ ?>
 
 
 

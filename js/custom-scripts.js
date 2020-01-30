@@ -17,26 +17,44 @@
 		});
 	});
 
+	$(document).on('click', '[data-toggle="lightbox"]', function(event){
+		event.preventDefault();
+		$(this).ekkoLightbox();
+	});
 
 
-} )( jQuery );
 
-
-
-/* Scroll to specific section on front page */
-( function($) {
-
+	/* Scroll to specific section on front page */
 	$('a[href*=\\#]:not([href=\\#])').click(function() {
 		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
 			var target = $(this.hash);
 			target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
 			if (target.length) {
 				$('html,body').animate({
-					scrollTop: (target.offset().top - 80)
+					scrollTop: (target.offset().top - 100)
 				}, 1000);
 				return false;
 			}
 		}
+	});	
+
+
+
+
+	// ISOTOPE INITIALIZATION
+	$('.filter-button-group').on('click', 'button', function(){
+		var filterValue = $(this).attr('data-filter');
+		$('.grid').isotope({
+			filter: filterValue,
+			layoutMode: 'fitRows'
+		});
 	});
 
-}) (jQuery);
+
+	var height = $('.site-header').height();
+	var newHeight = height+32;
+	console.log(height);
+	$('.contact-margin-top').css('margin-top', newHeight+'px');
+
+
+} )( jQuery );

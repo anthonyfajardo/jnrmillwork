@@ -228,6 +228,8 @@ function jnrmillwork_styles() {
 	wp_enqueue_style( 'jnrmillwork-style', get_stylesheet_uri() );
 
 	wp_enqueue_style('google-fonts', jnrmillwork_fonts_url(), array(), null);
+
+	wp_enqueue_style('font-awesome', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 }
 add_action( 'wp_enqueue_scripts', 'jnrmillwork_styles');
 
@@ -288,3 +290,36 @@ function featured_image_url($currentPost){
 
 
 
+/**
+ * Get the parent permalink based on the url path
+ *
+ * @param $id int
+ * @return str
+ */
+
+function get_parent_permalink($id = false) {
+    $id = !$id ? get_the_id() : $id;
+    return str_replace(basename(get_permalink($id)) . '/', '', get_permalink($id));
+}
+
+
+
+// Changing the Category Title
+
+function jnrmillwork_archive_title( $title ) {
+    if ( is_category() ) {
+        $title = single_cat_title( '', false );
+    } elseif ( is_tag() ) {
+        $title = single_tag_title( '', false );
+    } elseif ( is_author() ) {
+        $title = '<span class="vcard">' . get_the_author() . '</span>';
+    } elseif ( is_post_type_archive() ) {
+        $title = post_type_archive_title( '', false );
+    } elseif ( is_tax() ) {
+        $title = single_term_title( 'Currently Browsing:<br>', false );
+    }
+  
+    return $title;
+}
+ 
+add_filter( 'get_the_archive_title', 'jnrmillwork_archive_title' );

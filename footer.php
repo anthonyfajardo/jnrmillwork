@@ -18,6 +18,9 @@
 			<div class="footer-left footer">
 				<p>Copyright &copy <?php echo get_the_date('Y'); ?> by JNR Millwork</p>
 			</div>
+			<div class="footer-center footer">
+				<?php get_template_part('template-parts/partial-social-media'); ?>
+			</div>
 			<div class="footer-right footer">
 				<p>Website Developed by <a href="https://anthonyfajardo.com">Anthony Fajardo</a></p>
 			</div>

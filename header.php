@@ -27,6 +27,7 @@
 	<header id="masthead" class="site-header">
 		<div class="site-branding">
 			<?php the_custom_logo(); ?>
+			<div class="site-name"><?php bloginfo('name'); ?></div>
 		</div><!-- .site-branding -->
 
 		<nav id="site-navigation" class="main-navigation">

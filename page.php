@@ -12,6 +12,10 @@
  * @package jnrmillwork
  */
 
+if(is_page('social-media')){
+	wp_redirect(get_site_url(), 301);
+}
+
 get_header();
 ?>
 
@@ -22,7 +26,9 @@ get_header();
 		while ( have_posts() ) :
 			the_post();
 
-			get_template_part( 'template-parts/content', 'custom-page' );
+			get_template_part( 'template-parts/content', 'custom-page' );	
+			
+			
 
 			// If comments are open or we have at least one comment, load up the comment template.
 			if ( comments_open() || get_comments_number() ) :
